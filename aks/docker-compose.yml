@@ -1,0 +1,34 @@
+version: '3'
+services:
+  app:
+    image: livekit/livekit-server:v1.4.4
+    container_name: livekit-server
+    restart: always
+    command: --disable-strict-config
+    ports:
+      - 7880:7880
+      - 7881:7881
+    expose:
+      - 20000-60000/udp
+    environment:
+      LIVEKIT_CONFIG: |
+        keys:
+          KEY_NAME: KEY_VALUE
+        log_level: info
+        port: 7880
+        redis:
+          address: REDIS_SERVER_URL_AND_PORT
+          password: REDIS_SERVER_PASSWORD
+          user: REDIS_SERVER_USER
+          db: 0
+        rtc:
+          port_range_end: 60000
+          port_range_start: 50000
+          tcp_port: 7881
+          use_external_ip: true
+        turn:
+          domain: <your-turn-domain>
+          enabled: false
+          loadBalancerAnnotations: {}
+          secretName: <turn-tls-secret>
+          tls_port: 3478
