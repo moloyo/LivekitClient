@@ -20,7 +20,7 @@ data:
       tcp_port: 7881
       use_external_ip: true
     turn:
-      domain: turn.joaquingarcia.ar
+      domain: YOUR_TURN_DOMAIN
       enabled: false
       loadBalancerAnnotations: {}
       secretName: turn
@@ -170,7 +170,7 @@ spec:
   ingressClassName: nginx
   rules:
   # In order to work with cert manager on DO, we cannot set us as a default backend
-  - host: "joaquingarcia.ar"
+  - host: "YOUR_DOMAIN"
     http:
       paths:
       - pathType: Prefix
@@ -182,7 +182,7 @@ spec:
               number: 80
   tls:
     - hosts:
-        - "joaquingarcia.ar"
+        - "YOUR_DOMAIN"
       secretName: "tls-secret-ingress-euge"
 ---
 # Source: livekit-server/templates/tests/test-connection.yaml
