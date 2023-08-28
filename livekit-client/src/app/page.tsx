@@ -1,4 +1,8 @@
 "use client"
+import Button from '@/components/button';
+import Dropdown from '@/components/dropdown';
+import Form from '@/components/form';
+import InputText from '@/components/inputText';
 import Stage from '@/components/stage';
 import { ConnectionState, ControlBar, LiveKitRoom, RoomName } from '@livekit/components-react';
 import { useEffect, useState } from 'react';
@@ -20,14 +24,10 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
-      <div className='p-2'>
-        <label htmlFor="username">Username: </label>
-        <input disabled={token ? true : false} className='text-black' type="text" name="username" id="username" value={username} onChange={(event) => setUsername(event.target.value)} />
-      </div>
-      <div className='p-2'>
-        <label htmlFor="room">Room: </label>
-        <input disabled={token ? true : false} className='text-black' type="text" name="room" id="room" value={room} onChange={(event) => setRoom(event.target.value)} />
-      </div>
+      <Form>
+        <InputText label="Username" value={username} onChange={(event) => setUsername(event.target.value)} />
+        <Dropdown label="Camera" selectedOption={room} options={['Camera 1', 'Camera 2']} onChange={(event) => setRoom(event.target.value)}></Dropdown>
+      </Form>
       {token ?
         <>
           <LiveKitRoom
@@ -41,7 +41,7 @@ export default function Home() {
           </LiveKitRoom>
         </>
         :
-        <button className='btn' disabled={username && room ? false : true} onClick={connect}>Connect!</button>
+        <Button disabled={username && room ? false : true} text='Connect' onClick={connect} />
       }
     </main>
   )
