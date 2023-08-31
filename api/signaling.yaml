@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: signaling-deployment
+  labels:
+    app: signaling-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: signaling-pod
+  template:
+    metadata:
+      labels:
+        app: signaling-pod
+    spec:
+      containers:
+      - name: signaling-pod
+        image: <Put signaling API image URL here>
+        env:
+        - name: LIVEKIT_API_KEY
+          value: ""
+        - name: LIVEKIT_API_SECRET
+          value: ""
+        - name: CAMERA_NAME
+          value: "cam01"
+        - name: CAMERA_ROOM_NAME
+          value: "Camera_1"
+        - name: CAMERA_DEVICE_URL
+          value: ""
+        - name: LIVEKIT_SERVER_URL
+          value: ""
+        - name: SERVICE_PORT
+          value: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: signaling-service
+spec:
+  selector:
+    app: signaling-pod
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+      nodePort: 31000
