@@ -13,7 +13,6 @@ const handler = NextAuth({
             client: {
                 token_endpoint_auth_method: "none",
             }
-
         }),
     ],
     // debug: true,
