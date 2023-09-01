@@ -16,6 +16,8 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
+      <div>NEXTAUTH_URL: {process.env.NEXTAUTH_URL}</div>
+      <div>NEXTAUTH_SECRET: {process.env.NEXTAUTH_SECRET}</div>
       {
         sessionStatus === "loading" ?
           <>
