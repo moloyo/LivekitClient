@@ -1,6 +1,6 @@
 type ButtonProps = {
     text: string,
-    disabled: boolean,
+    disabled?: boolean,
     onClick: (param: any) => void
 }
 
