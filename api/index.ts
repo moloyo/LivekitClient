@@ -15,21 +15,28 @@ app.get('/', (req: Request, res: Response) => {
 
 app.post('/viewcamera/:id', async (req: Request, res: Response) => {
   const camId = req.params.id;
-  const userName = req.body.user_name; // TODO: change to get this username from AD B2C auth token if possible
+  const userName = req.body.userName; // TODO: change to get this username from AD B2C auth token if possible
 
   const result = await activateCamera(camId, userName);
 
   res.status(result.status ? 200 : 500).send(result);
 });
 
-app.post('/startrecording', (req: Request, res: Response) => {
-  const result = startRecording();
-  res.send(result);
+app.post('/startrecording', async (req: Request, res: Response) => {
+  const audioTrackId = req.body.audioTrackId;
+  const videoTrackId = req.body.videoTrackId;
+
+  const result = await startRecording(audioTrackId, videoTrackId);
+
+  res.status(result.status ? 200 : 500).send(result);
 });
 
-app.post('/stoprecording', (req: Request, res: Response) => {
-  const result = stopRecording();
-  res.send(result);
+app.post('/stoprecording', async (req: Request, res: Response) => {
+  const egressId = req.body.egressId;
+
+  const result = await stopRecording(egressId);
+
+  res.status(result.status ? 200 : 500).send(result);
 });
 
 app.listen(port, () => {

@@ -1,6 +1,7 @@
 import { AccessToken } from "livekit-server-sdk";
+import { VIEWER_PERMISSIONS } from "./constants";
 
-export async function generateToken(room: string, userName: string): Promise<TokenGeneratorResult> {
+export async function generateToken(room: string, userName: string, permissons: any = VIEWER_PERMISSIONS): Promise<TokenGeneratorResult> {
     const res: TokenGeneratorResult = { status: true };
 
     if (!room) {
@@ -24,7 +25,10 @@ export async function generateToken(room: string, userName: string): Promise<Tok
 
     const at = new AccessToken(apiKey, apiSecret, { identity: userName });
 
-    at.addGrant({ room, roomJoin: true, canPublish: true, canSubscribe: true });
+    at.ttl = '24h';
+
+    permissons.room = room;
+    at.addGrant(permissons);
 
     res.token = at.toJwt();
 

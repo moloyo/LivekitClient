@@ -80,7 +80,7 @@ Method: POST
 path: /viewcamera/CAM_ID (CAM_ID is irrelevant as per Aug 2023, but a value must be provided)
 body:
 {
-    "user_name": "YOUR USER NAME"
+    "userName": "YOUR USER NAME"
 }
 
 response:
@@ -100,16 +100,15 @@ Method: POST
 path: /startrecording
 body:
 {
-    "user_id": "YOUR USER NAME",
-	"room": "Camera_1",
-	"track_ids": ["TR_VXXXXX", "TR_AYYYYY"]
+	"audioTrackId": "TR_VXXXXX",
+    "videoTrackId": "TR_AYYYYY"
 }
 
 response:
 {
     "status": true
-	"egress_id": "ID OF THE EGRESS CREATED FOR RECORDING",
-	"room_id": "INTERNAL LIVEKIT ROOM ID",
+	"egressId": "ID OF THE EGRESS CREATED FOR RECORDING",
+	"roomId": "INTERNAL LIVEKIT ROOM ID",
 	"error": "IF ANY"
 }
 ```
@@ -122,14 +121,12 @@ Method: POST
 path: /stoprecording
 body:
 {
-	"egress_id": "THE SAME VALUE RETURNED BY START RECORDING"
+	"egressId": "THE SAME VALUE RETURNED BY START RECORDING"
 }
 
 response:
 {
     "status": true
-	"egress_id": "ID OF THE EGRESS CREATED FOR RECORDING",
-	"room_id": "INTERNAL LIVEKIT ROOM ID",
 	"error": "IF ANY"
 }
 ```

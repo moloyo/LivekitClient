@@ -2,12 +2,12 @@ import { generateToken } from "../livekit/token_generator";
 import { controlCamera } from "./camera";
 
 export async function activateCamera(camId: string, userName: string): Promise<StartCameraResponse> {
-    const cameraRoomName = process.env.CAMERA_ROOM_NAME!; // TODO: Change this to come from env var or to be fetched given a camera ID (multiple cams)
+    const cameraRoomName = process.env.CAMERA_ROOM_NAME!; // TODO: Change this to be fetched given a camera ID (multiple cams)
     const cameraName = process.env.CAMERA_NAME;
     const livekitServerURL = process.env.LIVEKIT_SERVER_URL;
     const cameraDeviceBaseURL = process.env.CAMERA_DEVICE_URL!;
 
-    const res: StartCameraResponse = { status: true };
+    const res: StartCameraResponse = { status: false };
 
     // TODO: validate camera-2-user association if possible
 
@@ -15,7 +15,6 @@ export async function activateCamera(camId: string, userName: string): Promise<S
     let generatedToken = "";
     const token = await generateToken(cameraRoomName, userName).then(result => {
         if (result.error) {
-            res.status = false;
             res.error = result.error;
 
             return res;
@@ -27,12 +26,12 @@ export async function activateCamera(camId: string, userName: string): Promise<S
     // Activates the camera device
     const controlResult = await controlCamera(cameraDeviceBaseURL, `start?roomName=${cameraRoomName}`);
     if (!controlResult.status) {
-        res.status = false;
         res.error = controlResult.error;
 
         return res;
     }
 
+    res.status = true;
     res.camName = cameraName;
     res.roomName = cameraRoomName;
     res.livekitToken = generatedToken;

@@ -35,3 +35,15 @@ declare type TokenGeneratorResult = {
     error?: string;
     token?: string;
 };
+
+declare type StartRecordingResult = {
+    status: boolean;
+    egressId?: string;
+    roomName?: string;
+    error?: string;
+};
+
+declare type StopRecordingResult = {
+    status: boolean;
+    error?: string;
+};
